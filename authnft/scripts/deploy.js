@@ -1,17 +1,15 @@
-const hre = require("hardhat");
+import hre from "hardhat";
 
 async function main() {
-  const [deployer] = await hre.ethers.getSigners();
-  console.log("Deploying contracts with account:", deployer.address);
+  const publicClient = await hre.viem.getPublicClient();
+  const walletClient = await hre.viem.getWalletClient();
 
-  const Cert = await hre.ethers.getContractFactory("CertificateNFT");
-  const cert = await Cert.deploy("Certify", "CERT");
-  await cert.deployed();
+  const CertificateNFT = await hre.viem.deployContract("CertificateNFT");
 
-  console.log("CertificateNFT deployed to:", cert.address);
+  console.log("CertificateNFT deployed at:", CertificateNFT.address);
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
 });
