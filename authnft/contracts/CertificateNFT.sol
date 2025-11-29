@@ -9,9 +9,12 @@ contract CertificateNFT is ERC721URIStorage, AccessControl {
 
     bytes32 public constant ISSUER_ROLE = keccak256("ISSUER_ROLE");
 
+    event CertificateMinted(address indexed issuer, address indexed to, uint256 tokenId, string tokenURI);
+
     constructor(string memory name_, string memory symbol_) ERC721(name_, symbol_) {
-        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _setupRole(ISSUER_ROLE, msg.sender);
+        // OpenZeppelin 5.x uses _grantRole, NOT _setupRole
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(ISSUER_ROLE, msg.sender);
     }
 
     function grantIssuer(address account) external onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -22,15 +25,28 @@ contract CertificateNFT is ERC721URIStorage, AccessControl {
         revokeRole(ISSUER_ROLE, account);
     }
 
-    function mintCertificate(address to, string calldata tokenURI) external onlyRole(ISSUER_ROLE) returns (uint256) {
-        uint256 tokenId = _nextTokenId;
-        _mint(to, tokenId);
-        _setTokenURI(tokenId, tokenURI);
+    function mintCertificate(address to, string calldata tokenURI) 
+        external 
+        onlyRole(ISSUER_ROLE) 
+        returns (uint256) 
+    {
+        uint256 newId = _nextTokenId;
+
+        _mint(to, newId);
+        _setTokenURI(newId, tokenURI);
+
         _nextTokenId++;
-        return tokenId;
+
+        emit CertificateMinted(msg.sender, to, newId, tokenURI);
+        return newId;
     }
 
-    function supportsInterface(bytes4 interfaceId) public view override(ERC721URIStorage, AccessControl) returns (bool) {
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(ERC721URIStorage, AccessControl)
+        returns (bool)
+    {
         return super.supportsInterface(interfaceId);
     }
 }
