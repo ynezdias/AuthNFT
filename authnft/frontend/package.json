@@ -1,0 +1,10 @@
+{
+"name": "authnft-frontend",
+"private": true,
+"dependencies": {
+"react": "18.x",
+"react-dom": "18.x",
+"ethers": "^6.0.0",
+"react-router-dom": "^6.14.0"
+}
+}
