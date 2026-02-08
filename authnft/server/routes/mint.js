@@ -29,13 +29,36 @@ const abi = [
 const contract = new ethers.Contract(process.env.CONTRACT_ADDRESS, abi, wallet);
 
 
-const tx = await contract.mintTo(recipient, tokenURI);
-const receipt = await tx.wait();
-return res.json({ receipt });
-} catch (err) {
-console.error(err);
-res.status(500).json({ error: err.message || String(err) });
-}
+    const tx = await contract.mintTo(recipient, tokenURI);
+    const receipt = await tx.wait();
+
+    // Find the CertificateMinted event
+    // Event signature: CertificateMinted(address indexed issuer, address indexed to, uint256 tokenId, string tokenURI)
+    let tokenId = null;
+    
+    // Parse logs to find the event
+    receipt.logs.forEach((log) => {
+        try {
+            // Attempt to parse the log with the contract interface
+            const parsedLog = contract.interface.parseLog({ topics: Array.from(log.topics), data: log.data });
+            if (parsedLog && parsedLog.name === 'CertificateMinted') {
+                tokenId = parsedLog.args.tokenId.toString();
+            }
+        } catch (e) {
+            // Ignore logs that don't match
+        }
+    });
+
+    return res.json({ 
+        success: true,
+        transactionHash: receipt.hash,
+        tokenId: tokenId,
+        blockNumber: receipt.blockNumber
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message || String(err) });
+  }
 });
 
 
