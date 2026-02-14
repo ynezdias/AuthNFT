@@ -39,3 +39,4 @@ describe("CertificateNFT", function () {
     await expect(nonIssuerContract.mintCertificate(recipient.address, "ipfs://bad")).to.be.reverted;
   });
 });
+//contract
