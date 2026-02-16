@@ -14,4 +14,3 @@ main().catch((err) => {
   process.exit(1);
 });
 // Restored package.js and node modules to fiz issues.
-// Note: This script uses Viem for deployment, which is different from the Hardhat deployment scripts.
