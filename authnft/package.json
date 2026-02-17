@@ -1,7 +1,6 @@
 {
   "name": "Hardhat 3 Beta",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "node": "hardhat node",
     "deploy:localhost": "hardhat run scripts/deploy.js --network localhost",
