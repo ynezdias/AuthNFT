@@ -1,0 +1,12 @@
+
+HRE keys: [
+  'userConfig',    'config',
+  'hooks',         'interruptions',
+  'globalOptions', 'versions',
+  'network',       'artifacts',
+  'solidity',      '_coverage',
+  '_gasAnalytics', 'tasks'
+]
+Error: hre.viem is undefined. Plugins loaded: userConfig, config, hooks, interruptions, globalOptions, versions, network, artifacts, solidity, _coverage, _gasAnalytics, tasks
+    at main (file:///C:/Users/Ynez%20Dias/OneDrive/Desktop/AuthNFT/authnft/scripts/deploy_escrow.js:7:15)
+    at file:///C:/Users/Ynez%20Dias/OneDrive/Desktop/AuthNFT/authnft/scripts/deploy_escrow.js:41:1

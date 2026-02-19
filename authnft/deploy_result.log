@@ -1,0 +1,4 @@
+
+TypeError: Cannot read properties of undefined (reading 'getPublicClient')
+    at main (file:///C:/Users/Ynez%20Dias/OneDrive/Desktop/AuthNFT/authnft/scripts/deploy_escrow.js:5:37)
+    at file:///C:/Users/Ynez%20Dias/OneDrive/Desktop/AuthNFT/authnft/scripts/deploy_escrow.js:37:1
