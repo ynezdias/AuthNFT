@@ -4,3 +4,6 @@ if (!ipfsUri) return null;
 if (ipfsUri.startsWith('ipfs://')) return `https://ipfs.io/ipfs/${ipfsUri.slice(7)}`;
 return ipfsUri;
 }
+
+
+//certificate revokeal status check
